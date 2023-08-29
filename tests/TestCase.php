@@ -1,10 +1,11 @@
 <?php
 
-namespace Octoper\StatamicBladeComponents\Tests;
+namespace Octoper\BladeComponents\Tests;
 
-use Statamic\Extend\Manifest;
+use Octoper\BladeComponents\ServiceProvider as BladeComponentsServiceProvider;
+use Octoper\BladeComponents\Tests\Components\TestServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Octoper\StatamicBladeComponents\StatamicBladeComponentsServiceProvider;
+use Statamic\Extend\Manifest;
 use Statamic\Providers\StatamicServiceProvider;
 use Statamic\Statamic;
 
@@ -14,7 +15,8 @@ abstract class TestCase extends OrchestraTestCase
     {
         return [
             StatamicServiceProvider::class,
-            StatamicBladeComponentsServiceProvider::class,
+            BladeComponentsServiceProvider::class,
+            TestServiceProvider::class,
         ];
     }
 
@@ -30,9 +32,9 @@ abstract class TestCase extends OrchestraTestCase
         parent::getEnvironmentSetUp($app);
 
         $app->make(Manifest::class)->manifest = [
-            'statamic-package-statamic-blade-components' => [
-                'id' => 'octoper/statamic-package-statamic-blade-components',
-                'namespace' => 'DoubleThreeDigital\\AddonBoilerplate\\',
+            'statamic-blade-components' => [
+                'id'        => 'octoper/statamic-blade-components',
+                'namespace' => 'Octoper\\BladeComponents',
             ],
         ];
     }
@@ -43,7 +45,7 @@ abstract class TestCase extends OrchestraTestCase
 
         $configs = [
             'assets', 'cp', 'forms', 'static_caching',
-            'sites', 'stache', 'system', 'users'
+            'sites', 'stache', 'system', 'users',
         ];
 
         foreach ($configs as $config) {
